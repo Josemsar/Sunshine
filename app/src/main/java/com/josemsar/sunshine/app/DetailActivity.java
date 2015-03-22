@@ -3,7 +3,9 @@ package com.josemsar.sunshine.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.*;
 import android.widget.TextView;
 
@@ -50,6 +52,7 @@ public class DetailActivity extends ActionBarActivity {
     public static class DetailFragment extends Fragment {
 
         public DetailFragment() {
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -62,6 +65,26 @@ public class DetailActivity extends ActionBarActivity {
                     .setText(intent.getExtras().getString(Intent.EXTRA_TEXT));
 
             return rootView;
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.fragment_detail, menu);
+            MenuItem item = menu.findItem(R.id.menu_item_share);
+            ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+            mShareActionProvider.setShareIntent(createSHareForecastIntent());
+        }
+
+        private Intent createSHareForecastIntent() {
+
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, getActivity().getIntent().getExtras().getString(Intent.EXTRA_TEXT) + " #SunshineApp");
+
+            return intent;
+
         }
     }
 }

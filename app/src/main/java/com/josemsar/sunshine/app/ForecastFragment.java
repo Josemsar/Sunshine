@@ -112,12 +112,9 @@ public class ForecastFragment extends Fragment {
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+            String Imperial = "1";
             SharedPreferences shareprefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-            //String s = getString(R.string.pref_units_key);
-            //int p = Integer.parseInt(getString(R.string.pref_units_default));
-            //int a = shareprefs.getInt(getStrng(R.string.pref_units_key), Integer.parseInt(getString(R.string.pref_units_default)));
-            if (shareprefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_default)).equals("1")) {
+            if (shareprefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_default)).equals(Imperial)) {
                 high += 33.8;
                 low += 33.8;
             }
